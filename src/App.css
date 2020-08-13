@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.editAction {
+  color: #FFC107;
+ 
+}
+.deleteAction {
+  color: #E34724;
+ 
+}
+.columnAction  {
+ 
+  font-size: '30px';
+  cursor: pointer;
+}
+
+.react-bootstrap-table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch
+  }
+  .react-bootstrap-table table {
+  table-layout: auto !important
+  }
+  .react-bootstrap-table tr {
+    cursor: pointer;
+    }
+  .table th,
+  .table td {
+  white-space: nowrap
+  }
