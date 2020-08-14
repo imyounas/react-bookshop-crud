@@ -1,4 +1,4 @@
-### My BookShop React APP
+# My BookShop React APP
 
 - This React uses Hooks and runs on Port 3000
 - Please make sure to change ther Server API URL from here
@@ -39,3 +39,11 @@
 
 - <b> /</b> =&gt; Home Page
 - <b> /404</b> or any route that is not registered =&gt; Page not found
+
+![Main Home Screen](https://github.com/imyounas/react-bookshop-crud/blob/master/Screenshots/home.PNG "Main Home Screen")
+![Books List View](https://github.com/imyounas/react-bookshop-crud/blob/master/Screenshots/Books.PNG "Books List View")
+![Main Home Screen](https://github.com/imyounas/react-bookshop-crud/blob/master/Screenshots/Authors.PNG "Authors List View")
+![Book Form](https://github.com/imyounas/react-bookshop-crud/blob/master/Screenshots/BookForm.PNG "Book Form")
+![Author Form](https://github.com/imyounas/react-bookshop-crud/blob/master/Screenshots/AuthorFormPNG.PNG "Author Form")
+
+
