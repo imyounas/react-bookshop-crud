@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 toast.configure()
 
-function AEForm({ history, match }) {
+function AuthorForm({ history, match }) {
 
 
     const { id } = match.params;
@@ -59,7 +59,7 @@ function AEForm({ history, match }) {
 
             setIsLoading(false);
         }
-    }, [id, isFormAddMode]);
+    }, []);
 
 
     const validationSchema = Yup.object({
@@ -174,4 +174,4 @@ function AEForm({ history, match }) {
     );
 }
 
-export default AEForm;
+export default AuthorForm;

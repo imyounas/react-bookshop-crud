@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import List from './List';
-import AEForm from './AEForm';
+import BookList from './BookList';
+import BookForm from './BookForm';
 
 
 function BookRouter({ match }) {
@@ -10,9 +10,9 @@ function BookRouter({ match }) {
 
     return (
         <Switch>
-            <Route exact path={path} component={List} />
-            <Route path={`${path}/add`} component={AEForm} />
-            <Route path={`${path}/edit/:id`} component={AEForm} />
+            <Route exact path={path} component={BookList} />
+            <Route path={`${path}/add`} component={BookForm} />
+            <Route path={`${path}/edit/:id`} component={BookForm} />
         </Switch>
     );
 }

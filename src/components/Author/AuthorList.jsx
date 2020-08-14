@@ -13,7 +13,7 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 
 const { SearchBar } = Search;
 
-function List({ history, match }) {
+function AuthorList({ history, match }) {
 
     const { path } = match;
 
@@ -203,4 +203,4 @@ function List({ history, match }) {
     );
 }
 
-export default List
+export default AuthorList

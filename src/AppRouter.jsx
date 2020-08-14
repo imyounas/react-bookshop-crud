@@ -1,7 +1,7 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header/Header";
-import AuthorEditor from "./components/Author/AuthorEditor";
+import AuthorRouter from "./components/Author/AuthorRouter";
 import BookRouter from "./components/Book/BookRouter";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound"
@@ -16,7 +16,7 @@ const AppRouter = () => {
       <Header></Header>
       <Switch>
         <Route exact path={["/", "/home"]} component={Home} />
-        <Route path="/authors" component={AuthorEditor} />
+        <Route path="/authors" component={AuthorRouter} />
         <Route path="/books" component={BookRouter} />
         <Route path="" component={NotFound} />
         <Route path="*" component={NotFound} />

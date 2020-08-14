@@ -13,7 +13,7 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 
 const { SearchBar } = Search;
 
-function List({ history, match }) {
+function BookList({ history, match }) {
 
     const { path } = match;
 
@@ -137,12 +137,7 @@ function List({ history, match }) {
         history.push(`${path}/edit/${row._id}`);
     }
 
-    function onDeleteCLicked(row) {
 
-        console.log(" Delete Clicked => ", row);
-
-        alert("Delete funtionality was not requested !");
-    }
 
     function actionsFormatter(cell, row, rowIndex, formatExtraData) {
         return (
@@ -215,4 +210,4 @@ function List({ history, match }) {
     );
 }
 
-export default List
+export default BookList

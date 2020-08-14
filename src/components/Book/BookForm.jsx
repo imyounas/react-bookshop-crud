@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 toast.configure()
 
-function AEForm({ history, match }) {
+function BookForm({ history, match }) {
 
     console.log('match', match);
     const { id } = match.params;
@@ -214,4 +214,4 @@ function AEForm({ history, match }) {
     );
 }
 
-export default AEForm;
+export default BookForm;
