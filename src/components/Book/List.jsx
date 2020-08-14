@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BootstrapTable from "react-bootstrap-table-next";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { RingLoader } from 'react-spinners'
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 
+
 const { SearchBar } = Search;
 
 function List({ history, match }) {
@@ -19,12 +20,12 @@ function List({ history, match }) {
     const columns = [
         {
             text: "Id",
-            dataField: "id",
+            dataField: "_id",
             sort: true,
             editable: false,
             headerAlign: 'left',
             headerStyle: () => {
-                return { width: "5%", verticalAlign: 'middle' };
+                return { width: "14%", verticalAlign: 'middle' };
             },
             type: 'number'
 
@@ -35,7 +36,7 @@ function List({ history, match }) {
             sort: true,
             headerAlign: 'left',
             headerStyle: () => {
-                return { width: "40%", verticalAlign: 'middle' };
+                return { width: "38%", verticalAlign: 'middle' };
             },
             type: 'string',
             filter: textFilter({
@@ -49,7 +50,7 @@ function List({ history, match }) {
             sort: true,
             headerAlign: 'left',
             headerStyle: () => {
-                return { width: "40%", verticalAlign: 'middle' };
+                return { width: "38%", verticalAlign: 'middle' };
             },
             type: 'string',
             filter: textFilter({
@@ -62,7 +63,7 @@ function List({ history, match }) {
             text: 'Actions',
             isDummyField: true,
             headerStyle: () => {
-                return { width: "15%", verticalAlign: 'middle' };
+                return { width: "10%", verticalAlign: 'middle' };
             },
             sort: false,
             csvExport: false,
@@ -80,11 +81,11 @@ function List({ history, match }) {
 
     const initialValues = [{}];
 
-    //state = { Books: this.Books, columns: this.columns }
+
     const [books, setBooks] = useState(initialValues);
     const [isLoading, setIsLoading] = useState(false);
 
-
+    //paging options
     const options = {
         page: 1,
         sizePerPageList: [{
@@ -94,7 +95,7 @@ function List({ history, match }) {
         }, {
             text: 'All', value: books.length
         }],
-        sizePerPage: 2,
+        sizePerPage: window.appConfig.pageSize,
         pageStartIndex: 1,
         paginationSize: 3,
         paginationPosition: 'bottom'
@@ -104,20 +105,19 @@ function List({ history, match }) {
 
         console.log("useEffect getting all books data");
         // get user and set form fields
-        toast.info('Fetching books List data...')
+
         setIsLoading(true);
         BookDataService.getAll().then(response => {
 
             toast.success('Books List Recieved...')
 
-            console.log(`got response of Books List `);
-            console.log(response.data);
+            console.log(`got response of Books List `, response.data);
             setBooks(response.data);
 
         }).catch(error => {
 
-            toast.error(`Error while fetching Books List ${error}`)
-            console.log(`Error while fetching Books List ${error}`);
+            toast.error(`Error while fetching Books List`, error)
+            console.log(`Error while fetching Books List`, error);
         });
 
         setIsLoading(false);
@@ -126,22 +126,20 @@ function List({ history, match }) {
 
 
     function onEditClicked(row) {
-        console.log("Edit Clicked => " + row);
-        console.log(row);
+        console.log("Edit Clicked => ", row);
 
-        history.push('.');
+        history.push(`${path}/edit/${row._id}`);
     }
 
     function onRowSelect(row) {
-        console.log("Row Selected => " + row);
-        console.log(row);
-        history.push(`${path}/edit/${row.id}`);
+        console.log("Row Selected => ", row);
+
+        history.push(`${path}/edit/${row._id}`);
     }
 
     function onDeleteCLicked(row) {
 
-        console.log(" Delete Clicked => " + row);
-        console.log(row);
+        console.log(" Delete Clicked => ", row);
 
         alert("Delete funtionality was not requested !");
     }
@@ -150,19 +148,21 @@ function List({ history, match }) {
         return (
 
             <div className="col text-center">
-                {console.log("in action formatter")}
 
-                <Link to={`${path}/edit/${row.id}`} >
+                <div className="d-inline">
+                    <Link to={`${path}/edit/${row._id}`} >
 
-                    <MatIcons.MdEdit className="mx-2 columnAction editAction" onClick={() => {
-                        onEditClicked(row);
-                    }}></MatIcons.MdEdit>
-                </Link>
-
-                <MatIcons.MdDeleteForever className="mx-2 columnAction deleteAction" onClick={() => {
-                    onDeleteCLicked(row);
-                }}></MatIcons.MdDeleteForever>
-
+                        <MatIcons.MdEdit className="mx-2 columnAction editAction" onClick={() => {
+                            onEditClicked(row);
+                        }}></MatIcons.MdEdit>
+                    </Link>
+                </div>
+                <div className="d-inline">
+                    <MatIcons.MdDeleteForever className="mx-2 columnAction deleteAction" onClick={e => {
+                        e.stopPropagation();
+                        alert("Delete funtionality was not requested !");
+                    }}></MatIcons.MdDeleteForever>
+                </div>
 
             </div>
 
@@ -183,7 +183,7 @@ function List({ history, match }) {
 
                 <ToolkitProvider
                     bootstrap4
-                    keyField="id"
+                    keyField="_id"
                     data={books}
                     columns={columns}
                     search

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Formik, Form } from "formik";
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as Yup from "yup";
 import FormikControl from "../FormControls/FormikControl";
 import AuthorDataService from '../../services/AuthorDataService';
@@ -13,19 +13,13 @@ toast.configure()
 
 function AEForm({ history, match }) {
 
-    let { slug } = useParams()
-
-    console.log(history);
-    console.log(match);
-    console.log(slug);
-
 
     const { id } = match.params;
 
     const isFormAddMode = !id;
 
     const initialValues = {
-        id: -1,
+        _id: "",
         firstName: "",
         lastName: ""
     };
@@ -34,20 +28,16 @@ function AEForm({ history, match }) {
     const [author, setAuthor] = useState(initialValues);
     const [isLoading, setIsLoading] = useState(false);
 
-
-
-
     useEffect(() => {
+
         if (!isFormAddMode) {
             console.log("useEffect !isFormAddMode");
-            // get user and set form fields
 
             setIsLoading(true);
             AuthorDataService.get(id).then(response => {
-                toast.success('Fetching Author data...')
-                console.log(`got response of ${id} , ${response} `);
-                console.log(response);
-                console.log(response.data);
+                toast.success('Reecived Author data...')
+                console.log(`got response of ${id} , ${response.data} `);
+
                 if (formikRef.current) {
                     formikRef.current.setFieldValue(
                         "firstName",
@@ -57,12 +47,14 @@ function AEForm({ history, match }) {
                         "lastName",
                         response.data.lastName
                     );
+
                     setAuthor(response.data);
+                    console.log('state object ', author);
                 }
             }).catch(error => {
 
-                toast.error(`Error while fetching Author ${error}`)
-                console.log(`Error while fetching Author ${error}`);
+                toast.error(`Error while fetching Author`, error)
+                console.log(`Error while fetching Author`, error);
             });
 
             setIsLoading(false);
@@ -97,16 +89,15 @@ function AEForm({ history, match }) {
         AuthorDataService.create(fields)
             .then(response => {
                 // alertService.success('User added', { keepAfterRouteChange: true });
-                console.log(`got response of createAuthor , ${response} `);
-                console.log(response);
-                toast.success('New Author Created...')
+                console.log('got response of createAuthor', response.data);
+                toast.success('New Author Successfully Created...')
                 history.push('/authors');
             })
             .catch(error => {
                 setSubmitting(false);
-                toast.error(`Error while creating Author ${error}`)
-                console.log(`Error while creating Author ${error}`);
-                console.log(error);
+                toast.error(`Error while creating Author`, error)
+                console.log(`Error while creating Author`, error);
+
             });
 
         setIsLoading(false);
@@ -115,21 +106,22 @@ function AEForm({ history, match }) {
     function updateAuthor(id, fields, setSubmitting) {
 
         setIsLoading(true);
+        fields._id = author._id;
+
         AuthorDataService.update(id, fields)
             .then(response => {
                 // alertService.success('User updated', { keepAfterRouteChange: true });
-                toast.success('Author Update...')
-                console.log(`got response of updateAuthor , ${response} `);
-                console.log(response);
+                toast.success('Author Updated Successfully...')
+                console.log(`got response of updateAuthor`, response);
 
                 history.push('/authors');
             })
             .catch(error => {
                 setSubmitting(false);
 
-                toast.error(`Error while updating Author ${error}`)
-                console.log("ops error");
-                console.log(error);
+                toast.error(`Error while updating Author`, error)
+                console.log("Error while updating Author", error);
+
             });
 
         setIsLoading(false);
@@ -146,7 +138,7 @@ function AEForm({ history, match }) {
                 return (
                     <div className="container col-md-12">
 
-                        <h3 className="my-5 text-center">{isFormAddMode ? 'Add New Author' : `Update Author ${author.firstName}`}</h3>
+                        <h3 className="my-5 text-center">{isFormAddMode ? 'Add New Author' : `Update Author : ${author.firstName}`}</h3>
 
                         <div className="container col-md-4">
 

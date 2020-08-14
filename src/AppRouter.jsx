@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import AuthorEditor from "./components/Author/AuthorEditor";
 import BookRouter from "./components/Book/BookRouter";
 import Home from "./components/Home";
+import NotFound from "./components/NotFound"
 
 
 
@@ -17,6 +18,9 @@ const AppRouter = () => {
         <Route exact path={["/", "/home"]} component={Home} />
         <Route path="/authors" component={AuthorEditor} />
         <Route path="/books" component={BookRouter} />
+        <Route path="" component={NotFound} />
+        <Route path="*" component={NotFound} />
+        <Route component={NotFound} />
         {/* <Redirect from="*" to="/" /> */}
       </Switch>
     </div>
